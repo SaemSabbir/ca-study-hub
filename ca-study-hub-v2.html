@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CA Study Hub — ICAB Certificate Level</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2128; --bg4:#21262d;
+  --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.12);
+  --accent:#58a6ff; --green:#3fb950; --yellow:#d29922; --red:#f85149;
+  --purple:#bc8cff; --orange:#e3b341; --teal:#39d353;
+  --text:#e6edf3; --text2:#7d8590; --text3:#b1bac4;
+  --r:12px; --shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* BANGLA TERM TOOLTIP */
+.term{border-bottom:1px dashed var(--accent);cursor:pointer;color:var(--accent);position:relative;display:inline-block}
+.term .tip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--bg3);border:1px solid var(--accent);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);white-space:nowrap;z-index:999;min-width:160px;text-align:center;box-shadow:var(--shadow)}
+.term .tip strong{display:block;color:var(--accent);font-size:13px;margin-bottom:2px}
+.term:hover .tip{display:block}
+
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:0;z-index:100}
+.hdr-row{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--text)}
+.logo span{color:var(--accent)}
+.logo-sub{font-size:10px;color:var(--text2);margin-top:1px}
+.badges{display:flex;gap:6px}
+.badge{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:3px 10px;font-size:11px}
+.badge.fire{color:var(--orange);border-color:rgba(227,179,65,0.3)}
+.badge.xp{color:var(--purple);border-color:rgba(188,140,255,0.3)}
+
+/* TABS */
+.tabs{display:flex;overflow-x:auto;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:57px;z-index:99;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:11px 16px;border:none;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* CONTENT */
+.main{padding:16px 16px 90px}
+.page{display:none}
+.page.on{display:block}
+
+/* SECTION HEADER */
+.sh{font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sh::after{content:'';flex:1;height:1px;background:var(--border)}
+.sh small{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text2);font-weight:400}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;transition:border-color .2s}
+.card:hover{border-color:rgba(88,166,255,0.2)}
+
+/* TOPIC */
+.topic{cursor:pointer}
+.t-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.ttag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:16px}
+.ttag.tax{background:rgba(210,153,34,0.15);color:var(--yellow)}
+.ttag.law{background:rgba(63,185,80,0.15);color:var(--green)}
+.t-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.t-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.t-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.t-body.open{display:block}
+.t-body p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px}
+
+/* DIAGRAM */
+.dbox{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 0;overflow-x:auto}
+.dtitle{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.tree .n{background:rgba(88,166,255,0.07);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:7px 12px;margin-bottom:5px;font-size:12px;color:var(--text);line-height:1.5}
+.tree .n.l2{margin-left:18px;border-left-color:var(--green);background:rgba(63,185,80,0.05)}
+.tree .n.l3{margin-left:36px;border-left-color:var(--yellow);background:rgba(210,153,34,0.05);font-size:11px;color:var(--text3)}
+.tree .n.l4{margin-left:54px;border-left-color:var(--purple);background:rgba(188,140,255,0.05);font-size:11px;color:var(--text3)}
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fb{background:var(--bg2);border:1px solid var(--accent);border-radius:8px;padding:7px 10px;font-size:11px;color:var(--text);text-align:center;min-width:70px;flex-shrink:0}
+.fb.hi{background:rgba(88,166,255,0.1)}
+.fb.ok{border-color:var(--green);color:var(--green);background:rgba(63,185,80,0.07)}
+.fb.no{border-color:var(--red);color:var(--red);background:rgba(248,81,73,0.07)}
+.fa{color:var(--text2);font-size:14px;flex-shrink:0}
+
+/* KEY BOX */
+.kbox{border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0}
+.kbox{background:rgba(88,166,255,0.04)}
+.kbox.warn{border-left-color:var(--yellow);background:rgba(210,153,34,0.04)}
+.kbox.ok{border-left-color:var(--green);background:rgba(63,185,80,0.04)}
+.kbox.err{border-left-color:var(--red);background:rgba(248,81,73,0.04)}
+.kbox h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;color:var(--accent)}
+.kbox.warn h4{color:var(--yellow)}.kbox.ok h4{color:var(--green)}.kbox.err h4{color:var(--red)}
+.kbox li,.kbox p{font-size:12px;color:var(--text2);line-height:1.6;margin-left:14px;margin-bottom:3px}
+.kbox p{margin-left:0}
+
+/* MNEMONIC */
+.mnem{background:rgba(188,140,255,0.07);border:1px solid rgba(188,140,255,0.2);border-radius:10px;padding:12px 14px;margin:10px 0}
+.mnem-lbl{font-size:10px;color:var(--purple);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.mnem-word{font-size:18px;font-weight:700;color:white;letter-spacing:2px;margin-bottom:5px}
+.mnem-exp{font-size:12px;color:var(--text2);line-height:1.6}
+.mnem-exp span{color:var(--purple);font-weight:600}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}
+.tbl th{background:rgba(88,166,255,0.08);color:var(--accent);padding:7px 10px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .hi{color:var(--text);font-weight:500}
+
+/* REF */
+.ref{display:inline-flex;align-items:center;gap:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:4px;padding:2px 6px;font-size:10px;color:var(--accent);font-weight:600;margin-left:4px}
+
+/* QUIZ */
+.qcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.qmeta{font-size:10px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.qtext{font-size:14px;color:var(--text);font-weight:500;line-height:1.5;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-size:13px;color:var(--text3);cursor:pointer;transition:all .2s;text-align:left;font-family:'DM Sans',sans-serif}
+.opt:hover{border-color:var(--accent);color:var(--text)}
+.opt.correct{border-color:var(--green);background:rgba(63,185,80,0.1);color:var(--green)}
+.opt.wrong{border-color:var(--red);background:rgba(248,81,73,0.1);color:var(--red)}
+.opt.disabled{pointer-events:none}
+.qexp{display:none;margin-top:10px;padding:10px;background:rgba(88,166,255,0.04);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:12px;color:var(--text2);line-height:1.6}
+.qexp.show{display:block}
+
+/* FLASHCARD */
+.fc-wrap{perspective:1000px;margin-bottom:12px}
+.fc{width:100%;height:175px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;backface-visibility:hidden}
+.fc-f{background:var(--bg2);border:1px solid var(--border)}
+.fc-b{background:linear-gradient(135deg,#1c2128,#161b22);border:1px solid rgba(88,166,255,0.2);transform:rotateY(180deg)}
+.fc-lbl{font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.fc-txt{font-size:14px;font-weight:600;color:var(--text);text-align:center;line-height:1.4}
+.fc-b .fc-txt{font-size:12px;color:var(--text2);font-weight:400;line-height:1.6}
+.fc-hint{font-size:10px;color:var(--text2);margin-top:8px}
+.fc-ctrls{display:flex;gap:8px}
+.fcb{flex:1;padding:10px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.fcb.k{background:rgba(63,185,80,0.12);color:var(--green);border:1px solid rgba(63,185,80,0.25)}
+.fcb.s{background:rgba(248,81,73,0.08);color:var(--red);border:1px solid rgba(248,81,73,0.2)}
+.fcb.fl{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.fc-info{text-align:center;font-size:11px;color:var(--text2);margin-bottom:8px}
+
+/* POMODORO */
+.pom{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;margin-bottom:14px}
+.pom-ring{width:120px;height:120px;border-radius:50%;border:4px solid var(--border);border-top-color:var(--accent);margin:0 auto 12px;position:relative;transition:border-top-color .3s}
+.pom-ring.brk{border-top-color:var(--green)}
+.pom-inner{position:absolute;inset:8px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.pom-time{font-family:'Playfair Display',serif;font-size:28px;color:var(--text)}
+.pom-mode{font-size:11px;color:var(--text2);margin-bottom:10px}
+.pom-btns{display:flex;gap:8px;justify-content:center}
+.pb{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);cursor:pointer}
+.pb.go{background:rgba(88,166,255,0.12);border-color:var(--accent);color:var(--accent)}
+.pom-dots{display:flex;gap:5px;justify-content:center;margin-top:10px}
+.pdot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.pdot.done{background:var(--accent)}
+
+/* TRACKER */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cd{aspect-ratio:1;border-radius:5px;background:rgba(255,255,255,0.02);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text2);cursor:pointer;transition:all .2s}
+.cd.studied{background:rgba(88,166,255,0.15);border-color:var(--accent);color:var(--accent)}
+.cd.today{border-color:var(--orange);color:var(--orange)}
+
+/* PROGRESS */
+.pw{margin-bottom:12px}
+.pl{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px}
+.pb2{height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),#1f6feb)}
+
+/* NOTES */
+.ntxt{width:100%;min-height:140px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.7;resize:vertical;outline:none}
+.ntxt:focus{border-color:rgba(88,166,255,0.35)}
+.ntxt::placeholder{color:var(--text2)}
+.sbtn{margin-top:7px;padding:7px 16px;background:rgba(63,185,80,0.12);border:1px solid rgba(63,185,80,0.25);border-radius:8px;color:var(--green);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+
+/* PDF UPLOAD */
+.pdf-zone{background:var(--bg3);border:2px dashed rgba(88,166,255,0.25);border-radius:var(--r);padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:14px}
+.pdf-zone:hover,.pdf-zone.drag{border-color:var(--accent);background:rgba(88,166,255,0.04)}
+.pdf-icon{font-size:36px;margin-bottom:8px}
+.pdf-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.pdf-sub{font-size:12px;color:var(--text2)}
+.pdf-input{display:none}
+.pdf-result{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-top:12px}
+.pdf-filename{font-size:12px;color:var(--accent);font-weight:600;margin-bottom:8px}
+.pdf-summary{font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap}
+.pdf-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.pact{padding:8px 14px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.pact.pri{background:rgba(88,166,255,0.15);color:var(--accent);border:1px solid rgba(88,166,255,0.25)}
+.pact.sec{background:var(--bg4);color:var(--text2);border:1px solid var(--border)}
+
+/* AI CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 205px)}
+.chat-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
+.msg{display:flex;gap:8px;animation:fu .3s ease}
+.msg.user{flex-direction:row-reverse}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.mav{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.mav.ai{background:linear-gradient(135deg,var(--accent),#1f6feb);color:white}
+.mav.u{background:linear-gradient(135deg,var(--orange),#e3600a);color:white}
+.mbub{max-width:82%;padding:9px 12px;border-radius:10px;font-size:13px;line-height:1.6}
+.msg.ai .mbub{background:var(--bg3);border:1px solid var(--border);color:var(--text3);border-radius:3px 10px 10px 10px}
+.msg.user .mbub{background:rgba(88,166,255,0.12);color:var(--text);border-radius:10px 3px 10px 10px}
+.tdots{display:flex;gap:3px;padding:9px 12px;background:var(--bg3);border-radius:3px 10px 10px 10px;width:fit-content}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--text2);animation:bl 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.chat-bot{border-top:1px solid var(--border);padding-top:10px}
+.qqs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.qqs::-webkit-scrollbar{display:none}
+.qq{flex-shrink:0;background:rgba(88,166,255,0.07);border:1px solid rgba(88,166,255,0.18);border-radius:14px;padding:4px 11px;font-size:11px;color:var(--accent);cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.ci-row{display:flex;gap:8px}
+.ci{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;resize:none}
+.ci:focus{border-color:rgba(88,166,255,0.35)}
+.ci::placeholder{color:var(--text2)}
+.csend{background:linear-gradient(135deg,var(--accent),#1f6feb);border:none;border-radius:10px;width:40px;height:40px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;z-index:100}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;cursor:pointer;color:var(--text2);font-size:9px;gap:3px;border:none;background:none;font-family:'DM Sans',sans-serif;transition:color .2s}
+.bni.on{color:var(--accent)}
+.bni-icon{font-size:18px}
+
+/* DASH */
+.dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.dstat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+.dnum{font-family:'Playfair Display',serif;font-size:26px;color:var(--accent)}
+.dlbl{font-size:10px;color:var(--text2);margin-top:3px}
+.welcome{background:linear-gradient(135deg,#1c2128,#161b22);border:1px solid rgba(88,166,255,0.18);border-radius:var(--r);padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.welcome::before{content:'🎓';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:44px;opacity:.08}
+.welcome h2{font-family:'Playfair Display',serif;font-size:19px;color:var(--text);margin-bottom:3px}
+.welcome h2 span{color:var(--accent)}
+.welcome p{font-size:12px;color:var(--text2)}
+.sbadges{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+.sbadge{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;display:flex;align-items:center;gap:10px}
+.sbadge.done{border-color:rgba(63,185,80,0.25)}
+.sbadge.now{border-color:rgba(88,166,255,0.25)}
+.sbi{font-size:20px}
+.sbn{font-size:12px;font-weight:600;color:var(--text)}
+.sbs{font-size:10px;color:var(--text2)}
+
+/* FILTER BTNS */
+.fbtns{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.fbtn{padding:7px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s}
+.fbtn.on{background:rgba(88,166,255,0.12);border-color:var(--accent);color:var(--accent)}
+
+/* CHECKLIST */
+.chi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.chk{width:20px;height:20px;border:2px solid rgba(255,255,255,0.15);border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:11px;transition:all .2s}
+.chk.on{background:rgba(63,185,80,0.15);border-color:var(--green);color:var(--green)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-row">
+    <div><div class="logo">CA <span>Study Hub</span></div><div class="logo-sub">ICAB Certificate Level • Saem Sabbir</div></div>
+    <div class="badges"><div class="badge fire">🔥 5 Days</div><div class="badge xp">⭐ 340 XP</div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab on" onclick="go('dash',this)">🏠 Home</button>
+  <button class="tab" onclick="go('tax',this)">💰 Taxation</button>
+  <button class="tab" onclick="go('law',this)">⚖️ Business Law</button>
+  <button class="tab" onclick="go('quiz',this)">🎯 Quiz</button>
+  <button class="tab" onclick="go('fc',this)">🃏 Flashcards</button>
+  <button class="tab" onclick="go('track',this)">📈 Tracker</button>
+  <button class="tab" onclick="go('notes',this)">📝 Notes</button>
+  <button class="tab" onclick="go('pdf',this)">📄 PDF Upload</button>
+  <button class="tab" onclick="go('ai',this)">🤖 AI Tutor</button>
+</div>
+
+<div class="main">
+
+<!-- ======= DASHBOARD ======= -->
+<div id="p-dash" class="page on">
+  <div class="welcome">
+    <h2>Welcome back, <span>Saem!</span> 👋</h2>
+    <p>ICAB CL • Passed: Assurance, Accounting • Now: Taxation + Business Law</p>
+  </div>
+  <div class="sbadges">
+    <div class="sbadge done"><div class="sbi">✅</div><div><div class="sbn">Assurance</div><div class="sbs">Passed ✓</div></div></div>
+    <div class="sbadge done"><div class="sbi">✅</div><div><div class="sbn">Accounting</div><div class="sbs">Passed ✓</div></div></div>
+    <div class="sbadge now"><div class="sbi">📚</div><div><div class="sbn">Taxation</div><div class="sbs">In Progress</div></div></div>
+    <div class="sbadge now"><div class="sbi">⚖️</div><div><div class="sbn">Business Law</div><div class="sbs">In Progress</div></div></div>
+  </div>
+  <div class="dgrid">
+    <div class="dstat"><div class="dnum">68%</div><div class="dlbl">Taxation Progress</div></div>
+    <div class="dstat"><div class="dnum">45%</div><div class="dlbl">Business Law</div></div>
+    <div class="dstat"><div class="dnum">82%</div><div class="dlbl">Quiz Accuracy</div></div>
+    <div class="dstat"><div class="dnum">5🔥</div><div class="dlbl">Day Streak</div></div>
+  </div>
+  <div class="card">
+    <div class="pw"><div class="pl"><span>Taxation (ITA 2023)</span><span style="color:var(--accent)">68%</span></div><div class="pb2"><div class="pf" style="width:68%"></div></div></div>
+    <div class="pw"><div class="pl"><span>Business & Law</span><span style="color:var(--accent)">45%</span></div><div class="pb2"><div class="pf" style="width:45%"></div></div></div>
+    <div class="pw"><div class="pl"><span>Quiz Mastery</span><span style="color:var(--green)">82%</span></div><div class="pb2"><div class="pf" style="width:82%;background:linear-gradient(90deg,var(--green),#2ea043)"></div></div></div>
+  </div>
+  <div class="pom">
+    <div class="pom-mode" id="pMode">🍅 Focus Session</div>
+    <div class="pom-ring" id="pRing"><div class="pom-inner"><div class="pom-time" id="pTime">25:00</div></div></div>
+    <div class="pom-btns"><button class="pb go" id="pBtn" onclick="togPom()">▶ Start</button><button class="pb" onclick="rstPom()">↺ Reset</button></div>
+    <div class="pom-dots" id="pDots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div>
+  </div>
+</div>
+
+<!-- ======= TAXATION ======= -->
+<div id="p-tax" class="page">
+  <div class="sh">Principles of Taxation <small>Income Tax Act 2023 (ITA 2023) • NBR Bangladesh</small></div>
+
+  <!-- T1: ITA 2023 Overview -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 1</span><span style="font-size:11px;color:var(--orange)">⭐ Foundation</span></div>
+    <div class="t-title">Income Tax Act 2023 — Overview</div>
+    <div class="t-desc">ITO 1984 replaced by ITA 2023. Key changes & structure.</div>
+    <div class="t-body">
+      <p>The <span class="term">Income Tax Act 2023<div class="tip"><strong>আয়কর আইন ২০২৩</strong>পুরনো ITO 1984 বাতিল করে নতুন আইন চালু</div></span> came into force on <strong>22 June 2023</strong> by gazette notification, replacing the Income Tax Ordinance 1984. The <span class="term">National Board of Revenue<div class="tip"><strong>জাতীয় রাজস্ব বোর্ড (NBR)</strong>কর প্রশাসনের সর্বোচ্চ সংস্থা</div></span> administers this Act. <span class="ref">Ref: ITA 2023</span></p>
+      <div class="dbox">
+        <div class="dtitle">Key Changes from ITO 1984 → ITA 2023</div>
+        <div class="tree">
+          <div class="n">🆕 New TIN (Taxpayer Identification Number) system</div>
+          <div class="n">🆕 Refund of overpaid tax provisions added</div>
+          <div class="n">🆕 Deregistration of WIN (Withholder Identification Number)</div>
+          <div class="n">🆕 Tax holiday for newly established industries</div>
+          <div class="n">🆕 Environment surcharge on multiple car owners</div>
+          <div class="n">🆕 Revenue Policy Division (RPD) & Revenue Management Division (RMD) formed in 2025</div>
+        </div>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ 2025 আপডেট</h4>
+        <p>Finance Ordinance 2025 এ NBR ও IRD বাতিল করে দুটো নতুন সংস্থা গঠন: Revenue Policy Division ও Revenue Management Division। <span class="ref">Ref: Finance Ordinance 2025</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- T2: Heads of Income -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 2</span><span style="font-size:11px;color:var(--orange)">⭐ High Marks</span></div>
+    <div class="t-title">Heads of Income — আয়ের উৎস</div>
+    <div class="t-desc">ITA 2023 এ কোন কোন উৎস থেকে আয় করযোগ্য</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Heads of Income (ITA 2023)</div>
+        <div class="tree">
+          <div class="n">📌 Total Income = Sum of all taxable heads</div>
+          <div class="n l2">1️⃣ Salaries (বেতন) — Section 40 ITA 2023</div>
+          <div class="n l3">Basic, allowances, perquisites, bonus, arrears, pension</div>
+          <div class="n l2">2️⃣ Interest on Securities (সিকিউরিটি সুদ)</div>
+          <div class="n l3">Govt/Non-Govt bonds and debentures</div>
+          <div class="n l2">3️⃣ Income from House Property (বাড়িভাড়া)</div>
+          <div class="n l3">Annual Value less 25% statutory deduction</div>
+          <div class="n l2">4️⃣ Agricultural Income (কৃষি আয়)</div>
+          <div class="n l3">Income from land used for agriculture in Bangladesh</div>
+          <div class="n l2">5️⃣ Income from Business (ব্যবসায়িক আয়) — Section 45</div>
+          <div class="n l3">Profits & gains from any trade, profession, or business</div>
+          <div class="n l2">6️⃣ Capital Gains (মূলধনী লাভ)</div>
+          <div class="n l3">Profit from transfer/sale of capital assets</div>
+          <div class="n l2">7️⃣ Income from Other Sources (অন্যান্য আয়)</div>
+          <div class="n l3">Dividends, royalties, prizes, gifts, lottery winnings</div>
+        </div>
+      </div>
+      <div class="mnem">
+        <div class="mnem-lbl">🧠 Mnemonic — 7 Heads মনে রাখো</div>
+        <div class="mnem-word">S I H A B C O</div>
+        <div class="mnem-exp"><span>S</span>alaries · <span>I</span>nterest on Securities · <span>H</span>ouse Property · <span>A</span>gricultural · <span>B</span>usiness · <span>C</span>apital Gains · <span>O</span>ther Sources</div>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ পরীক্ষায় সতর্কতা</h4>
+        <li>Royalty = Other Sources এর অন্তর্গত। Non-resident কে royalty দিলে 30% TDS <span class="ref">Ref: ITA 2023 S.59</span></li>
+        <li>Stock dividend > cash dividend হলে 10% tax on stock dividend amount <span class="ref">Ref: ITA 2023 S.23</span></li>
+      </div>
+    </div>
+  </div>
+
+  <!-- T3: Tax Slabs -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 3</span><span style="font-size:11px;color:var(--orange)">⭐ Most Important</span></div>
+    <div class="t-title">Tax Rates & Slabs — করের হার ২০২৪-২৫</div>
+    <div class="t-desc">Individual slabs, special limits, company rates — ITA 2023 অনুযায়ী</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Individual Tax Slabs — AY 2024-25 <span class="ref">Ref: Finance Act 2023 / ITA 2023 First Schedule</span></div>
+        <table class="tbl">
+          <tr><th>Income Slab</th><th>Rate</th><th>বাংলায়</th></tr>
+          <tr><td class="hi">প্রথম ৳3,50,000</td><td>NIL</td><td>করমুক্ত</td></tr>
+          <tr><td class="hi">পরবর্তী ৳1,00,000</td><td>5%</td><td>৫ শতাংশ</td></tr>
+          <tr><td class="hi">পরবর্তী ৳3,00,000</td><td>10%</td><td>১০ শতাংশ</td></tr>
+          <tr><td class="hi">পরবর্তী ৳4,00,000</td><td>15%</td><td>১৫ শতাংশ</td></tr>
+          <tr><td class="hi">পরবর্তী ৳5,00,000</td><td>20%</td><td>২০ শতাংশ</td></tr>
+          <tr><td class="hi">বাকি সব আয়</td><td>25%</td><td>২৫ শতাংশ</td></tr>
+        </table>
+      </div>
+      <div class="kbox">
+        <h4>📌 Special Exemption Limits <span class="ref">Ref: ITA 2023 / Finance Act 2023</span></h4>
+        <li>General (men): ৳3,50,000</li>
+        <li>Women & Senior citizens (65+): ৳4,00,000</li>
+        <li>Physically challenged / 3rd gender: ৳4,75,000</li>
+        <li>Gazette Freedom Fighters: ৳5,00,000</li>
+        <li>Minimum tax — Dhaka/Chittagong City Corp: ৳5,000</li>
+        <li>Minimum tax — Other City Corp: ৳4,000</li>
+        <li>Minimum tax — Other areas: ৳3,000</li>
+      </div>
+      <div class="dbox">
+        <div class="dtitle">Company Tax Rates <span class="ref">Ref: Finance Act 2023</span></div>
+        <table class="tbl">
+          <tr><th>Company Type</th><th>Rate</th></tr>
+          <tr><td class="hi">Listed company (DSE/CSE) — General</td><td>22.5%</td></tr>
+          <tr><td class="hi">Non-listed company</td><td>27.5%</td></tr>
+          <tr><td class="hi">Bank/Insurance/FI — Listed</td><td>37.5%</td></tr>
+          <tr><td class="hi">Bank/Insurance/FI — Non-listed</td><td>40%</td></tr>
+          <tr><td class="hi">Cigarette/Tobacco manufacturer</td><td>45%</td></tr>
+          <tr><td class="hi">Mobile phone operator</td><td>45%</td></tr>
+        </table>
+      </div>
+      <div class="mnem">
+        <div class="mnem-lbl">🧠 Individual Slab মনে রাখো</div>
+        <div class="mnem-word">3.5 → 1 → 3 → 4 → 5 → Rest</div>
+        <div class="mnem-exp">Exempt <span>3.5L</span> → 5% next <span>1L</span> → 10% next <span>3L</span> → 15% next <span>4L</span> → 20% next <span>5L</span> → 25% on rest</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T4: Residential Status -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 4</span><span style="font-size:11px;color:var(--text2)">📖 Important</span></div>
+    <div class="t-title">Residential Status — বাসস্থান মর্যাদা</div>
+    <div class="t-desc">Resident vs Non-Resident — কে কতটুকু tax দেবে</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Residential Status Test <span class="ref">Ref: ITA 2023 S.2</span></div>
+        <div class="flow">
+          <div class="fb hi">BD তে ≥182 দিন?</div>
+          <div class="fa">→</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="fb ok">হ্যাঁ → RESIDENT<br>Worldwide income taxed</div>
+            <div class="fb no">না → NON-RESIDENT<br>BD income only</div>
+          </div>
+        </div>
+      </div>
+      <div class="kbox">
+        <h4>✅ Resident — সুবিধা</h4>
+        <li>Tax slab benefit পাবে</li>
+        <li>Investment tax rebate পাবে (Section 78)</li>
+        <li>Worldwide income taxable কিন্তু double tax relief আছে</li>
+      </div>
+      <div class="kbox err">
+        <h4>❌ Non-Resident — সীমাবদ্ধতা</h4>
+        <li>শুধু Bangladesh sourced income tax দিতে হবে</li>
+        <li>Tax rebate পাবে না</li>
+        <li>Flat rate applicable (no progressive slab)</li>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ 2025 Amendment</h4>
+        <p>Section 21 amendment: "resident Bangladeshi" + "taxpayer or one who is or was a Bangladeshi by birth" — scope বাড়ানো হয়েছে। <span class="ref">Ref: Finance Ordinance 2025</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- T5: Investment Rebate -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 5</span><span style="font-size:11px;color:var(--orange)">⭐ High Marks</span></div>
+    <div class="t-title">Investment Tax Rebate — বিনিয়োগ ছাড়</div>
+    <div class="t-desc">Section 78 ITA 2023 — কীভাবে হিসাব করতে হয়</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Rebate Calculation — Step by Step <span class="ref">Ref: ITA 2023 Section 78</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="fb hi" style="text-align:left;min-width:100%">Step 1: Find Actual Investment Made</div>
+          <div style="color:var(--text2);font-size:14px;text-align:center">↓</div>
+          <div class="fb hi" style="text-align:left;min-width:100%">Step 2: Take LOWEST of 3:<br>① Actual investment<br>② 25% of Total Income<br>③ ৳1,50,00,000 (max)</div>
+          <div style="color:var(--text2);font-size:14px;text-align:center">↓</div>
+          <div class="fb ok" style="text-align:left;min-width:100%">Step 3: Rebate = 15% × (Lowest amount)</div>
+        </div>
+      </div>
+      <div class="kbox">
+        <h4>📌 Eligible Investments (Section 78)</h4>
+        <li>Life insurance premium</li>
+        <li>Provident fund contribution</li>
+        <li>DPS (up to ৳60,000/year)</li>
+        <li>Sanchayapatra / Savings certificates</li>
+        <li>Investment in listed securities (DSE/CSE)</li>
+        <li>Donation to approved national fund or charitable institution</li>
+      </div>
+      <div class="mnem">
+        <div class="mnem-lbl">🧠 Rebate Formula</div>
+        <div class="mnem-word">15% of LOWEST</div>
+        <div class="mnem-exp">Lowest of: <span>Actual</span> investment, <span>25%</span> of income, <span>৳1.5 Cr</span> max → ×15% = Rebate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T6: Surcharge -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag tax">Chapter 6</span><span style="font-size:11px;color:var(--text2)">📖 New Topic</span></div>
+    <div class="t-title">Surcharge — অতিরিক্ত কর</div>
+    <div class="t-desc">Net wealth based surcharge — FY 2025-26</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Surcharge Rates (FY 2025-26) <span class="ref">Ref: Finance Ordinance 2025</span></div>
+        <table class="tbl">
+          <tr><th>Net Wealth</th><th>Surcharge Rate</th></tr>
+          <tr><td class="hi">Up to ৳4 Crore</td><td>NIL (no surcharge)</td></tr>
+          <tr><td class="hi">৳4 Cr+ with 8,000 sqft property & 1 car</td><td>Min 10%</td></tr>
+          <tr><td class="hi">৳10 Crore to ৳20 Crore</td><td>20%</td></tr>
+          <tr><td class="hi">৳20 Crore to ৳50 Crore</td><td>25%</td></tr>
+          <tr><td class="hi">Above ৳50 Crore</td><td>35%</td></tr>
+        </table>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ মনে রাখো</h4>
+        <li>Surcharge is on Income Tax, not on income</li>
+        <li>Rates remain same for 2026-27 and 2027-28 also</li>
+        <li>Environment surcharge on 2nd car onwards also applicable</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= BUSINESS LAW ======= -->
+<div id="p-law" class="page">
+  <div class="sh">Business & Law <small>Contract Act 1872 • Companies Act 1994 • Labour Act 2006 • NI Act 1881</small></div>
+
+  <!-- L1: Contract Act -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag law">Contract Act</span><span style="font-size:11px;color:var(--orange)">⭐ Foundation</span></div>
+    <div class="t-title">Contract Act 1872 — চুক্তি আইন</div>
+    <div class="t-desc">Valid contract এর ৭টি উপাদান + Void vs Voidable</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">7 Elements of Valid Contract <span class="ref">Ref: Contract Act 1872</span></div>
+        <div class="tree">
+          <div class="n">✅ VALID CONTRACT — সব ৭টি থাকতে হবে</div>
+          <div class="n l2">1️⃣ Offer & Acceptance — প্রস্তাব ও গ্রহণ</div>
+          <div class="n l3">Offer must be definite. Acceptance must be absolute & unconditional (mirror image rule)</div>
+          <div class="n l2">2️⃣ Lawful Consideration — বৈধ বিনিময়</div>
+          <div class="n l3">Something of value exchanged. Past consideration = NOT valid in most cases</div>
+          <div class="n l2">3️⃣ Capacity of Parties — পক্ষের যোগ্যতা</div>
+          <div class="n l3">18+ years, sound mind, not disqualified. Minor's contract = VOID ab initio</div>
+          <div class="n l2">4️⃣ Free Consent — স্বাধীন সম্মতি (Section 14)</div>
+          <div class="n l3">No: Coercion, Fraud, Misrepresentation, Undue Influence, Mistake</div>
+          <div class="n l2">5️⃣ Lawful Object — বৈধ উদ্দেশ্য</div>
+          <div class="n l3">Not illegal, immoral, or against public policy</div>
+          <div class="n l2">6️⃣ Not Expressly Void — বাতিল নয়</div>
+          <div class="n l3">e.g. contract in restraint of trade = void (Section 27)</div>
+          <div class="n l2">7️⃣ Certainty & Possibility — নিশ্চয়তা</div>
+          <div class="n l3">Terms must be clear, definite and performable</div>
+        </div>
+      </div>
+      <div class="mnem">
+        <div class="mnem-lbl">🧠 Mnemonic</div>
+        <div class="mnem-word">OACFLNC</div>
+        <div class="mnem-exp"><span>O</span>ffer · <span>A</span>greement (Consideration) · <span>C</span>apacity · <span>F</span>ree Consent · <span>L</span>awful Object · <span>N</span>ot void · <span>C</span>ertainty</div>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ Void vs Voidable vs Unenforceable</h4>
+        <li><strong>Void:</strong> No legal effect from beginning. Cannot be ratified. (e.g. minor's contract, unlawful object)</li>
+        <li><strong>Voidable:</strong> Valid until avoided by aggrieved party. (e.g. coercion, fraud, misrepresentation)</li>
+        <li><strong>Unenforceable:</strong> Valid but court won't enforce. (e.g. time-barred contract)</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- L2: Companies Act -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag law">Companies Act</span><span style="font-size:11px;color:var(--text2)">📖 Important</span></div>
+    <div class="t-title">Companies Act 1994 — কোম্পানি আইন</div>
+    <div class="t-desc">Types of companies, MOA, AOA, Incorporation process</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Types of Companies <span class="ref">Ref: Companies Act 1994</span></div>
+        <div class="tree">
+          <div class="n">📌 Companies in Bangladesh</div>
+          <div class="n l2">🏢 Public Limited Company</div>
+          <div class="n l3">Min 7 members, no maximum. Can invite public to subscribe shares. Can list on DSE/CSE.</div>
+          <div class="n l2">🔒 Private Limited Company</div>
+          <div class="n l3">Min 2, Max 50 members. Cannot invite public. Share transfer restricted. Less compliance.</div>
+          <div class="n l2">🏛️ Company Limited by Guarantee</div>
+          <div class="n l3">Members guarantee to pay fixed amount if wound up. Common for NGOs/Associations.</div>
+          <div class="n l2">♾️ Unlimited Liability Company</div>
+          <div class="n l3">Members have unlimited personal liability. Very rare in practice.</div>
+        </div>
+      </div>
+      <div class="kbox">
+        <h4>📌 MOA vs AOA — Key Difference</h4>
+        <li><strong>MOA (Memorandum of Association):</strong> Company's constitution with the outside world. Contains: Name Clause, Registered Office Clause, Objects Clause, Liability Clause, Capital Clause.</li>
+        <li><strong>AOA (Articles of Association):</strong> Internal rules for management. Contains: Meeting rules, Director powers, Dividend policy, Share transfer rules.</li>
+        <li><strong>MOA supersedes AOA</strong> — In case of conflict, MOA prevails.</li>
+      </div>
+      <div class="dbox">
+        <div class="dtitle">Incorporation Process (RJSC)</div>
+        <div class="flow">
+          <div class="fb hi">Name<br>Clearance</div><div class="fa">→</div>
+          <div class="fb">Draft MOA<br>& AOA</div><div class="fa">→</div>
+          <div class="fb">Submit to<br>RJSC</div><div class="fa">→</div>
+          <div class="fb">Pay<br>Fees</div><div class="fa">→</div>
+          <div class="fb ok">Certificate of<br>Incorporation ✅</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L3: Labour Act -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag law">Labour Act</span><span style="font-size:11px;color:var(--orange)">⭐ Important</span></div>
+    <div class="t-title">Bangladesh Labour Act 2006 — শ্রম আইন</div>
+    <div class="t-desc">Working hours, leave, gratuity, termination — verified provisions</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Key Provisions <span class="ref">Ref: BLA 2006 (amended 2018)</span></div>
+        <table class="tbl">
+          <tr><th>Topic</th><th>Provision</th><th>Section</th></tr>
+          <tr><td class="hi">Working Hours</td><td>Max 8 hrs/day, 48 hrs/week</td><td>S.100</td></tr>
+          <tr><td class="hi">Overtime</td><td>Max 2 hrs/day extra, paid at 2x rate</td><td>S.108</td></tr>
+          <tr><td class="hi">Annual Leave</td><td>1 day per 18 days worked (adult)</td><td>S.117</td></tr>
+          <tr><td class="hi">Casual Leave</td><td>10 days/year (cannot carry forward)</td><td>S.115</td></tr>
+          <tr><td class="hi">Sick Leave</td><td>14 days/year with half pay</td><td>S.116</td></tr>
+          <tr><td class="hi">Maternity Leave</td><td>16 weeks (8 before + 8 after delivery)</td><td>Ch.IV</td></tr>
+          <tr><td class="hi">Festival Bonus</td><td>2 per year, each = 1 month gross pay</td><td>S.132</td></tr>
+        </table>
+      </div>
+      <div class="dbox">
+        <div class="dtitle">Gratuity Rules <span class="ref">Ref: BLA 2006 Section 2(x)</span></div>
+        <div class="tree">
+          <div class="n">Gratuity = Separation payment on termination</div>
+          <div class="n l2">Service &lt; 1 year → No gratuity</div>
+          <div class="n l2">Service 1-10 years → 30 days' last wages per completed year</div>
+          <div class="n l2">Service &gt; 10 years → 45 days' last wages per completed year</div>
+          <div class="n l3">Formula: Last Basic × Years × 30 (or 45)/26</div>
+        </div>
+      </div>
+      <div class="dbox">
+        <div class="dtitle">Termination Types <span class="ref">Ref: BLA 2006 Section 20-26</span></div>
+        <table class="tbl">
+          <tr><th>Type</th><th>Notice Required</th><th>Compensation</th></tr>
+          <tr><td class="hi">Termination (S.26)<br>Monthly rated permanent</td><td>120 days written notice</td><td>30 days wages/year OR gratuity (higher)</td></tr>
+          <tr><td class="hi">Termination (S.26)<br>Other permanent worker</td><td>60 days written notice</td><td>30 days wages/year OR gratuity (higher)</td></tr>
+          <tr><td class="hi">Retrenchment (S.20)</td><td>1 month notice (if 1+ year service)</td><td>30 days wages/year OR gratuity (higher)</td></tr>
+          <tr><td class="hi">Dismissal (Misconduct)</td><td>Inquiry → Show cause → Dismissal</td><td>No compensation for proven misconduct</td></tr>
+          <tr><td class="hi">Resignation by Worker</td><td>60 days notice</td><td>Gratuity if 5+ years service</td></tr>
+          <tr><td class="hi">Retirement Age</td><td>60 years — ipso facto retirement</td><td>Full benefits</td></tr>
+        </table>
+      </div>
+      <div class="mnem">
+        <div class="mnem-lbl">🧠 Termination Notice মনে রাখো</div>
+        <div class="mnem-word">120 : 60 : 30</div>
+        <div class="mnem-exp">Employer terminates monthly worker: <span>120 days</span> · Other worker: <span>60 days</span> · Retrenchment notice: <span>30 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L4: NI Act -->
+  <div class="card topic" onclick="tog(this)">
+    <div class="t-head"><span class="ttag law">NI Act</span><span style="font-size:11px;color:var(--text2)">📖 Exam Relevant</span></div>
+    <div class="t-title">Negotiable Instruments Act 1881</div>
+    <div class="t-desc">Cheque, Bill of Exchange, Promissory Note comparison</div>
+    <div class="t-body">
+      <div class="dbox">
+        <div class="dtitle">Comparison Table <span class="ref">Ref: NI Act 1881</span></div>
+        <table class="tbl">
+          <tr><th>Feature</th><th>Cheque</th><th>Bill of Exchange</th><th>Promissory Note</th></tr>
+          <tr><td class="hi">Parties</td><td>3 (Drawer, Bank, Payee)</td><td>3 (Drawer, Drawee, Payee)</td><td>2 (Maker, Payee)</td></tr>
+          <tr><td class="hi">Drawee</td><td>Always a Bank</td><td>Any person</td><td>N/A — Maker promises</td></tr>
+          <tr><td class="hi">Payable</td><td>On demand only</td><td>On demand or future</td><td>On demand or future</td></tr>
+          <tr><td class="hi">Stamp Duty</td><td>Not required</td><td>Required</td><td>Required</td></tr>
+          <tr><td class="hi">Dishonour Result</td><td>Criminal liability (S.138)</td><td>Civil remedy</td><td>Civil remedy</td></tr>
+        </table>
+      </div>
+      <div class="kbox warn">
+        <h4>⚠️ Cheque Dishonour — Section 138 (Criminal)</h4>
+        <li>Payee must give <strong>notice within 30 days</strong> of cheque dishonour</li>
+        <li>Drawer gets <strong>30 days</strong> to make payment after receiving notice</li>
+        <li>If not paid → Criminal case → Up to <strong>1 year imprisonment</strong> OR fine up to <strong>3x cheque amount</strong></li>
+        <li>Or both imprisonment + fine</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= QUIZ ======= -->
+<div id="p-quiz" class="page">
+  <div class="sh">Practice Quiz</div>
+  <div class="fbtns">
+    <button class="fbtn on" onclick="fQ('all',this)">🔀 All</button>
+    <button class="fbtn" onclick="fQ('tax',this)">💰 Taxation</button>
+    <button class="fbtn" onclick="fQ('law',this)">⚖️ Business Law</button>
+  </div>
+  <div style="text-align:right;font-size:12px;color:var(--accent);margin-bottom:10px">Score: <span id="sc">0</span>/<span id="sc2">0</span></div>
+  <div id="qList"></div>
+</div>
+
+<!-- ======= FLASHCARDS ======= -->
+<div id="p-fc" class="page">
+  <div class="sh">Flashcards</div>
+  <div class="fbtns">
+    <button class="fbtn on" onclick="fCD('tax',this)">💰 Tax</button>
+    <button class="fbtn" onclick="fCD('law',this)">⚖️ Law</button>
+    <button class="fbtn" onclick="fCD('all',this)">🔀 Mixed</button>
+  </div>
+  <div class="fc-info">Card <span id="fci">1</span>/<span id="fct">1</span> • <span id="fck">0</span> mastered ✓</div>
+  <div class="fc-wrap">
+    <div class="fc" id="mfc" onclick="flipFC()">
+      <div class="fc-f"><div class="fc-lbl">QUESTION</div><div class="fc-txt" id="fcQ">Loading...</div><div class="fc-hint">Tap to flip</div></div>
+      <div class="fc-b"><div class="fc-lbl">ANSWER</div><div class="fc-txt" id="fcA">Loading...</div></div>
+    </div>
+  </div>
+  <div class="fc-ctrls">
+    <button class="fcb s" onclick="nFC(false)">✗ Skip</button>
+    <button class="fcb fl" onclick="flipFC()">↻ Flip</button>
+    <button class="fcb k" onclick="nFC(true)">✓ Got it</button>
+  </div>
+</div>
+
+<!-- ======= TRACKER ======= -->
+<div id="p-track" class="page">
+  <div class="sh">Study Tracker</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+      <span style="font-size:13px;font-weight:600">March 2026</span>
+      <span style="font-size:12px;color:var(--accent)" id="cCnt">0 study days</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:5px;text-align:center">
+      <div style="font-size:9px;color:var(--text2)">Su</div><div style="font-size:9px;color:var(--text2)">Mo</div><div style="font-size:9px;color:var(--text2)">Tu</div><div style="font-size:9px;color:var(--text2)">We</div><div style="font-size:9px;color:var(--text2)">Th</div><div style="font-size:9px;color:var(--text2)">Fr</div><div style="font-size:9px;color:var(--text2)">Sa</div>
+    </div>
+    <div class="cal" id="calG"></div>
+  </div>
+  <div class="sh" style="margin-top:14px">Today's Checklist</div>
+  <div id="chkList"></div>
+  <div class="sh" style="margin-top:14px">Progress</div>
+  <div class="card">
+    <div class="pw"><div class="pl"><span>Taxation Chapters (ITA 2023)</span><span style="color:var(--accent)">5/12</span></div><div class="pb2"><div class="pf" style="width:42%"></div></div></div>
+    <div class="pw"><div class="pl"><span>Business Law Topics</span><span style="color:var(--accent)">4/10</span></div><div class="pb2"><div class="pf" style="width:40%"></div></div></div>
+    <div class="pw"><div class="pl"><span>Quiz Accuracy</span><span style="color:var(--green)">82%</span></div><div class="pb2"><div class="pf" style="width:82%;background:linear-gradient(90deg,var(--green),#2ea043)"></div></div></div>
+    <div class="pw"><div class="pl"><span>Flashcards Mastered</span><span style="color:var(--purple)">64/120</span></div><div class="pb2"><div class="pf" style="width:53%;background:linear-gradient(90deg,var(--purple),#9a6cd4)"></div></div></div>
+  </div>
+</div>
+
+<!-- ======= NOTES ======= -->
+<div id="p-notes" class="page">
+  <div class="sh">My Notes</div>
+  <div class="fbtns">
+    <button class="fbtn on" id="nb-tax" onclick="setNS('tax',this)">💰 Taxation</button>
+    <button class="fbtn" id="nb-law" onclick="setNS('law',this)">⚖️ Law</button>
+    <button class="fbtn" id="nb-gen" onclick="setNS('gen',this)">📝 General</button>
+  </div>
+  <div class="card">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:7px" id="nLbl">💰 Taxation Notes</div>
+    <textarea class="ntxt" id="nArea" placeholder="নোট লিখুন... বাংলা বা English"></textarea>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+      <button class="sbtn" onclick="svNote()">💾 Save</button>
+      <span style="font-size:11px;color:var(--green)" id="nMsg"></span>
+    </div>
+  </div>
+  <div class="sh" style="margin-top:14px">Saved Notes</div>
+  <div id="sNotes"></div>
+</div>
+
+<!-- ======= PDF UPLOAD ======= -->
+<div id="p-pdf" class="page">
+  <div class="sh">PDF Study Material</div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-size:13px;color:var(--text2);line-height:1.6">ICAB এর PDF বা study manual upload করো। AI সেটা analyze করে তোমার জন্য study notes, key points ও flashcards তৈরি করবে।</div>
+  </div>
+
+  <div class="pdf-zone" id="pdfZone" onclick="document.getElementById('pdfIn').click()" ondragover="pdDrag(event)" ondrop="pdDrop(event)" ondragleave="this.classList.remove('drag')">
+    <input type="file" id="pdfIn" class="pdf-input" accept=".pdf" onchange="pdLoad(this)">
+    <div class="pdf-icon">📄</div>
+    <div class="pdf-title">PDF Upload করো</div>
+    <div class="pdf-sub">Tap to select or drag & drop your PDF here</div>
+    <div class="pdf-sub" style="margin-top:4px;font-size:11px;color:var(--purple)">ICAB study manual, past papers, notes</div>
+  </div>
+
+  <div id="pdfStatus" style="display:none" class="card">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-size:24px" id="pdfStatusIcon">⏳</div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text)" id="pdfStatusTitle">Processing...</div>
+        <div style="font-size:11px;color:var(--text2)" id="pdfStatusSub">AI is reading your PDF</div>
+      </div>
+    </div>
+    <div class="pb2" style="margin-top:10px"><div class="pf" id="pdfBar" style="width:0%;transition:width .5s"></div></div>
+  </div>
+
+  <div id="pdfResult" style="display:none">
+    <div class="card">
+      <div class="pdf-filename" id="pdfName">📄 filename.pdf</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px" id="pdfPages"></div>
+      <div class="pdf-actions">
+        <button class="pact pri" onclick="pdfAction('summary')">📋 Summary</button>
+        <button class="pact pri" onclick="pdfAction('keypoints')">🔑 Key Points</button>
+        <button class="pact pri" onclick="pdfAction('quiz')">🎯 Generate Quiz</button>
+        <button class="pact pri" onclick="pdfAction('flashcard')">🃏 Flashcards</button>
+        <button class="pact sec" onclick="pdfAsk()">💬 Ask Question</button>
+      </div>
+    </div>
+    <div id="pdfOutput" class="card" style="display:none">
+      <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:8px" id="pdfOutTitle"></div>
+      <div class="pdf-summary" id="pdfOutContent"></div>
+    </div>
+    <div id="pdfAskBox" style="display:none" class="card">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">PDF সম্পর্কে প্রশ্ন করো:</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="pdfQ" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none" placeholder="PDF থেকে কী জানতে চাও?">
+        <button onclick="pdfAskSend()" style="background:rgba(88,166,255,0.15);border:1px solid var(--accent);border-radius:8px;padding:9px 14px;color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600">জিজ্ঞেস করো</button>
+      </div>
+      <div id="pdfAns" style="display:none;margin-top:10px;padding:10px;background:var(--bg3);border-radius:8px;font-size:13px;color:var(--text2);line-height:1.6"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= AI TUTOR ======= -->
+<div id="p-ai" class="page">
+  <div class="chat-wrap">
+    <div class="chat-msgs" id="cMsgs">
+      <div class="msg ai"><div class="mav ai">AI</div><div class="mbub">Assalamu Alaikum Saem! 👋 আমি তোমার CA Study Assistant। ICAB Certificate Level এর Taxation, Business Law, Labour Act — সব বিষয়ে প্রশ্ন করো। সঠিক সেকশন নম্বর সহ উত্তর দেব! 📚</div></div>
+    </div>
+    <div class="chat-bot">
+      <div class="qqs">
+        <div class="qq" onclick="qQ(this)">ITA 2023 কী পরিবর্তন?</div>
+        <div class="qq" onclick="qQ(this)">Tax slab 2024-25</div>
+        <div class="qq" onclick="qQ(this)">Investment rebate calculation</div>
+        <div class="qq" onclick="qQ(this)">Gratuity formula</div>
+        <div class="qq" onclick="qQ(this)">Contract void vs voidable</div>
+        <div class="qq" onclick="qQ(this)">Cheque dishonour law</div>
+        <div class="qq" onclick="qQ(this)">MOA vs AOA difference</div>
+        <div class="qq" onclick="qQ(this)">Surcharge rates 2025</div>
+      </div>
+      <div class="ci-row">
+        <textarea class="ci" id="cIn" placeholder="Tax, Law, ICAB বিষয়ে প্রশ্ন করো..." rows="1" onkeydown="cKey(event)"></textarea>
+        <button class="csend" onclick="sendC()">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- main -->
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <button class="bni on" onclick="go('dash',this)"><span class="bni-icon">🏠</span>Home</button>
+  <button class="bni" onclick="go('tax',this)"><span class="bni-icon">💰</span>Tax</button>
+  <button class="bni" onclick="go('law',this)"><span class="bni-icon">⚖️</span>Law</button>
+  <button class="bni" onclick="go('quiz',this)"><span class="bni-icon">🎯</span>Quiz</button>
+  <button class="bni" onclick="go('pdf',this)"><span class="bni-icon">📄</span>PDF</button>
+  <button class="bni" onclick="go('ai',this)"><span class="bni-icon">🤖</span>AI</button>
+</div>
+
+<script>
+// ===== NAV =====
+function go(p,el){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.tab,.bni').forEach(x=>x.classList.remove('on'));
+  document.getElementById('p-'+p).classList.add('on');
+  if(el) el.classList.add('on');
+  document.querySelectorAll('.tab,.bni').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+p+"'")) b.classList.add('on');
+  });
+}
+
+// ===== TOPIC TOGGLE =====
+function tog(c){c.querySelector('.t-body').classList.toggle('open')}
+
+// ===== POMODORO =====
+let pSec=25*60,pRun=false,pBrk=false,pSess=0,pInt;
+function togPom(){
+  if(pRun){clearInterval(pInt);pRun=false;document.getElementById('pBtn').textContent='▶ Start';}
+  else{pRun=true;document.getElementById('pBtn').textContent='⏸ Pause';pInt=setInterval(tickP,1000);}
+}
+function tickP(){
+  if(pSec>0){pSec--;updP();}
+  else{
+    clearInterval(pInt);pRun=false;
+    if(!pBrk){pSess++;updDots();pSec=5*60;pBrk=true;document.getElementById('pMode').textContent='☕ Break Time!';document.getElementById('pRing').classList.add('brk');}
+    else{pSec=25*60;pBrk=false;document.getElementById('pMode').textContent='🍅 Focus Session';document.getElementById('pRing').classList.remove('brk');}
+    document.getElementById('pBtn').textContent='▶ Start';
+  }
+}
+function updP(){const m=String(Math.floor(pSec/60)).padStart(2,'0'),s=String(pSec%60).padStart(2,'0');document.getElementById('pTime').textContent=m+':'+s;}
+function rstPom(){clearInterval(pInt);pSec=25*60;pRun=false;pBrk=false;updP();document.getElementById('pBtn').textContent='▶ Start';document.getElementById('pMode').textContent='🍅 Focus Session';document.getElementById('pRing').classList.remove('brk');}
+function updDots(){document.querySelectorAll('.pdot').forEach((d,i)=>{i<pSess%4?d.classList.add('done'):d.classList.remove('done')});}
+
+// ===== QUIZ DATA (Research-verified) =====
+const Qs=[
+  {s:'tax',q:'Income Tax Act 2023 কত তারিখে কার্যকর হয়েছে?',o:['1 July 2023','22 June 2023','1 January 2023','15 August 2023'],a:1,e:'ITA 2023 gazette notification এর মাধ্যমে 22 June 2023 তারিখে কার্যকর হয়েছে, পুরনো ITO 1984 কে replace করে। (Ref: ITA 2023)'},
+  {s:'tax',q:'AY 2024-25 তে general individual taxpayer এর tax-free income limit কত?',o:['৳2,50,000','৳3,00,000','৳3,50,000','৳4,00,000'],a:2,e:'General (male) taxpayer এর করমুক্ত সীমা ৳3,50,000। Women ও 65+ senior citizens পান ৳4,00,000। (Ref: Finance Act 2023 / ITA 2023 First Schedule)'},
+  {s:'tax',q:'Investment tax rebate এর হার কত? (Section 78 ITA 2023)',o:['10%','12.5%','15%','20%'],a:2,e:'Investment rebate = 15% of eligible amount. Eligible = LOWEST of: actual investment, 25% of total income, ৳1,50,00,000. (Ref: ITA 2023 Section 78)'},
+  {s:'tax',q:'Listed company (DSE/CSE) এর income tax rate কত?',o:['20%','22.5%','25%','27.5%'],a:1,e:'DSE/CSE তে listed general companies ২২.৫% tax দেয়। Non-listed companies দেয় ২৭.৫%। (Ref: Finance Act 2023)'},
+  {s:'tax',q:'Bangladesh এ Residential status নির্ধারণে কত দিন উপস্থিত থাকতে হয়?',o:['90 days','120 days','182 days','270 days'],a:2,e:'একজন ব্যক্তিকে Bangladesh এ কমপক্ষে 182 দিন থাকতে হবে Resident হতে। Resident মানে worldwide income taxable। (Ref: ITA 2023)'},
+  {s:'tax',q:'Net wealth ৳4 Crore পর্যন্ত হলে surcharge কত? (FY 2025-26)',o:['5%','10%','No surcharge','15%'],a:2,e:'৳4 Crore পর্যন্ত net wealth এ কোনো surcharge নেই। ৳4 Crore+ এর উপর (8000 sqft property ও 1 car সহ) minimum 10% surcharge। (Ref: Finance Ordinance 2025)'},
+  {s:'law',q:'Contract Act 1872 অনুযায়ী minor (অপ্রাপ্তবয়স্ক) এর সাথে চুক্তি কী ধরনের?',o:['Valid','Voidable','Void ab initio','Unenforceable'],a:2,e:'Minor এর সাথে চুক্তি void ab initio — শুরু থেকেই কোনো আইনি প্রভাব নেই। Minor এর capacity নেই contract করার। (Ref: Contract Act 1872)'},
+  {s:'law',q:'Bangladesh Labour Act 2006 অনুযায়ী একজন worker সপ্তাহে সর্বোচ্চ কত ঘণ্টা কাজ করতে পারবে?',o:['40 hours','44 hours','48 hours','56 hours'],a:2,e:'Maximum 8 hours/day এবং 48 hours/week। Overtime maximum 2 hours/day extra, double rate তে paid। (Ref: BLA 2006 Section 100, 108)'},
+  {s:'law',q:'BLA 2006 অনুযায়ী 10 বছরের বেশি service এর জন্য gratuity rate কত?',o:['14 days/year','30 days/year','45 days/year','60 days/year'],a:2,e:'10 বছরের বেশি service হলে 45 days\' last wages per completed year। 1-10 years হলে 30 days/year। (Ref: BLA 2006 Section 2(x), amended)'},
+  {s:'law',q:'Cheque dishonour (Section 138 NI Act) এ payee কত দিনের মধ্যে notice দিতে হবে?',o:['15 days','30 days','60 days','90 days'],a:1,e:'Cheque dishonour এর 30 দিনের মধ্যে payee কে notice দিতে হবে। Notice পাওয়ার পর drawer এর কাছে আরো 30 দিন আছে payment করার। (Ref: NI Act 1881 Section 138)'},
+  {s:'law',q:'Companies Act 1994 অনুযায়ী Private Limited Company তে সর্বোচ্চ কত জন member থাকতে পারে?',o:['20','30','50','100'],a:2,e:'Private Limited Company: Minimum 2, Maximum 50 members। Public Limited Company: Minimum 7, কোনো maximum নেই। (Ref: Companies Act 1994)'},
+  {s:'law',q:'Permanent monthly-rated worker কে terminate করতে কত দিনের notice দিতে হবে?',o:['30 days','60 days','90 days','120 days'],a:3,e:'Permanent monthly-rated worker কে terminate করতে 120 days এর written notice দিতে হবে। অন্য permanent worker কে 60 days। (Ref: BLA 2006 Section 26)'},
+];
+
+let curQs=[...Qs],qCorr=0,qAns=0;
+function fQ(t,el){document.querySelectorAll('.fbtns .fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');curQs=t==='all'?[...Qs]:Qs.filter(q=>q.s===t);qCorr=0;qAns=0;rQ();}
+function rQ(){
+  document.getElementById('sc').textContent=qCorr;document.getElementById('sc2').textContent=qAns;
+  document.getElementById('qList').innerHTML=curQs.map((q,i)=>`
+    <div class="qcard" id="qc${i}">
+      <div class="qmeta">${q.s==='tax'?'💰 TAXATION':'⚖️ BUSINESS LAW'} • Q${i+1}</div>
+      <div class="qtext">${q.q}</div>
+      <div class="opts">${q.o.map((o,j)=>`<button class="opt" onclick="ansQ(${i},${j})" id="o${i}_${j}">${o}</button>`).join('')}</div>
+      <div class="qexp" id="e${i}">${q.e}</div>
+    </div>`).join('');
+}
+function ansQ(qi,oi){
+  const q=curQs[qi];
+  for(let j=0;j<q.o.length;j++){const b=document.getElementById(`o${qi}_${j}`);b.classList.add('disabled');if(j===q.a)b.classList.add('correct');else if(j===oi&&oi!==q.a)b.classList.add('wrong');}
+  document.getElementById(`e${qi}`).classList.add('show');
+  qAns++;if(oi===q.a)qCorr++;
+  document.getElementById('sc').textContent=qCorr;document.getElementById('sc2').textContent=qAns;
+}
+
+// ===== FLASHCARDS =====
+const fcD={
+  tax:[
+    {q:'ITA 2023 কত তারিখে কার্যকর?',a:'22 June 2023 — gazette notification এর মাধ্যমে। ITO 1984 কে replace করেছে।'},
+    {q:'7 Heads of Income মনেমনিক কী?',a:'S-I-H-A-B-C-O: Salaries, Interest on Securities, House Property, Agricultural, Business, Capital Gains, Other Sources.'},
+    {q:'Investment rebate কীভাবে calculate করে?',a:'15% × LOWEST of: ① Actual investment ② 25% of total income ③ ৳1,50,00,000. (ITA 2023 Section 78)'},
+    {q:'Listed company tax rate?',a:'22.5% — DSE/CSE তে listed general company। Non-listed = 27.5%। Bank/Insurance listed = 37.5%।'},
+    {q:'Residential status এর test কী?',a:'Income year এ Bangladesh এ ≥182 days উপস্থিত থাকলে Resident। Resident = worldwide income taxable।'},
+    {q:'Minimum tax Dhaka/Chittagong CCA?',a:'৳5,000 — Dhaka ও Chittagong City Corporation এলাকায়। Other city corps: ৳4,000। Rural: ৳3,000।'},
+    {q:'Surcharge কখন লাগে?',a:'Net wealth ৳4 Crore এর উপরে + 8000 sqft property + 1 car হলে minimum 10% surcharge। ৳50 Cr+ = 35%।'},
+  ],
+  law:[
+    {q:'Valid contract এর 7 elements কী?',a:'OACFLNC: Offer, Agreement/Consideration, Capacity, Free Consent, Lawful Object, Not Void, Certainty. (Contract Act 1872)'},
+    {q:'Void vs Voidable contract পার্থক্য?',a:'Void = শুরু থেকেই কোনো effect নেই (minor এর contract)। Voidable = aggrieved party avoid করলে তবেই void হয় (fraud, coercion)।'},
+    {q:'Gratuity rate — service 10+ years?',a:'45 days\' last wages per completed year of service। 1-10 years = 30 days/year। (BLA 2006 Section 2(x))'},
+    {q:'Permanent monthly worker terminate করতে কত দিন notice?',a:'120 days written notice। অন্য permanent worker = 60 days। Retrenchment = 30 days। (BLA 2006 Section 26)'},
+    {q:'MOA vs AOA — কোনটা বড়?',a:'MOA > AOA। MOA = external constitution (name, objects, capital)। AOA = internal rules। Conflict হলে MOA prevails।'},
+    {q:'Cheque dishonour notice period?',a:'Dishonour এর 30 দিনের মধ্যে notice দিতে হবে। Notice পাওয়ার 30 দিনের মধ্যে payment না হলে Section 138 criminal case।'},
+    {q:'Private Ltd Company maximum members?',a:'50 জন। Minimum 2। Public Ltd: Minimum 7, কোনো maximum নেই। (Companies Act 1994)'},
+  ],
+  all:[]
+};
+fcD.all=[...fcD.tax,...fcD.law].sort(()=>Math.random()-.5);
+
+let fcIdx=0,fcKn=0,fcFlip=false,curFC=[...fcD.tax];
+function fCD(t,el){document.querySelectorAll('.fbtns .fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');curFC=[...fcD[t]];fcIdx=0;fcKn=0;rFC();}
+function rFC(){
+  document.getElementById('fcQ').textContent=curFC[fcIdx].q;
+  document.getElementById('fcA').textContent=curFC[fcIdx].a;
+  document.getElementById('fci').textContent=fcIdx+1;
+  document.getElementById('fct').textContent=curFC.length;
+  document.getElementById('fck').textContent=fcKn;
+  document.getElementById('mfc').classList.remove('flip');fcFlip=false;
+}
+function flipFC(){document.getElementById('mfc').classList.toggle('flip');fcFlip=!fcFlip;}
+function nFC(k){if(k)fcKn++;fcIdx=(fcIdx+1)%curFC.length;rFC();}
+
+// ===== CALENDAR =====
+function bldCal(){
+  const g=document.getElementById('calG');
+  const now=new Date();const d=now.getDate();
+  const days=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const fd=new Date(now.getFullYear(),now.getMonth(),1).getDay();
+  const sd=JSON.parse(localStorage.getItem('sd2')||'[]');
+  g.innerHTML='';
+  for(let i=0;i<fd;i++) g.appendChild(document.createElement('div'));
+  for(let i=1;i<=days;i++){
+    const div=document.createElement('div');div.className='cd';div.textContent=i;
+    if(sd.includes(i))div.classList.add('studied');
+    if(i===d)div.classList.add('today');
+    div.onclick=()=>{
+      const s=JSON.parse(localStorage.getItem('sd2')||'[]');
+      const idx=s.indexOf(i);idx>-1?s.splice(idx,1):s.push(i);
+      localStorage.setItem('sd2',JSON.stringify(s));bldCal();
+    };
+    g.appendChild(div);
+  }
+  const cnt=JSON.parse(localStorage.getItem('sd2')||'[]').length;
+  document.getElementById('cCnt').textContent=cnt+' study days';
+}
+
+// ===== CHECKLIST =====
+const tasks=[
+  {id:'c1',t:'Taxation: ITA 2023 Heads of Income পড়ো',s:'💰',xp:20},
+  {id:'c2',t:'Taxation: Tax Slabs ও Rebate practice',s:'💰',xp:20},
+  {id:'c3',t:'Business Law: Contract Act 7 elements',s:'⚖️',xp:15},
+  {id:'c4',t:'Labour Act: Termination rules',s:'⚖️',xp:15},
+  {id:'c5',t:'Quiz: 10টা MCQ complete করো',s:'🎯',xp:25},
+  {id:'c6',t:'Flashcards: 10টা review করো',s:'🃏',xp:10},
+];
+function bldChk(){
+  const done=JSON.parse(localStorage.getItem('tasks2')||'[]');
+  document.getElementById('chkList').innerHTML=tasks.map(t=>`
+    <div class="chi">
+      <div class="chk ${done.includes(t.id)?'on':''}" onclick="togChk('${t.id}')">${done.includes(t.id)?'✓':''}</div>
+      <div style="flex:1"><div style="font-size:13px;color:${done.includes(t.id)?'var(--text2)':'var(--text)'};text-decoration:${done.includes(t.id)?'line-through':'none'}">${t.t}</div><div style="font-size:10px;color:var(--text2)">${t.s} Subject</div></div>
+      <div style="font-size:11px;color:var(--orange)">+${t.xp} XP</div>
+    </div>`).join('');
+}
+function togChk(id){
+  const d=JSON.parse(localStorage.getItem('tasks2')||'[]');
+  const idx=d.indexOf(id);idx>-1?d.splice(idx,1):d.push(id);
+  localStorage.setItem('tasks2',JSON.stringify(d));bldChk();
+}
+
+// ===== NOTES =====
+let nSubj='tax';
+function setNS(s,el){
+  document.querySelectorAll('.fbtns .fbtn').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  nSubj=s;
+  const labels={tax:'💰 Taxation Notes',law:'⚖️ Business Law Notes',gen:'📝 General Notes'};
+  document.getElementById('nLbl').textContent=labels[s];
+  document.getElementById('nArea').value=localStorage.getItem('n_'+s)||'';
+  ldNotes();
+}
+function svNote(){
+  localStorage.setItem('n_'+nSubj,document.getElementById('nArea').value);
+  document.getElementById('nMsg').textContent='✅ Saved!';
+  setTimeout(()=>document.getElementById('nMsg').textContent='',2000);
+  ldNotes();
+}
+function ldNotes(){
+  const subjs=[{id:'tax',l:'💰 Tax'},{id:'law',l:'⚖️ Law'},{id:'gen',l:'📝 General'}];
+  document.getElementById('sNotes').innerHTML=subjs.map(s=>{
+    const n=localStorage.getItem('n_'+s.id);
+    if(!n)return '';
+    return `<div class="card" style="margin-bottom:8px"><div style="font-size:11px;color:var(--accent);margin-bottom:5px">${s.l}</div><div style="font-size:12px;color:var(--text2);line-height:1.6;white-space:pre-wrap">${n.substring(0,200)}${n.length>200?'...':''}</div></div>`;
+  }).join('');
+}
+
+// ===== PDF UPLOAD =====
+let pdfContent='',pdfFname='';
+function pdDrag(e){e.preventDefault();document.getElementById('pdfZone').classList.add('drag');}
+function pdDrop(e){
+  e.preventDefault();document.getElementById('pdfZone').classList.remove('drag');
+  const f=e.dataTransfer.files[0];
+  if(f&&f.type==='application/pdf')processPDF(f);
+}
+function pdLoad(inp){if(inp.files[0])processPDF(inp.files[0]);}
+function processPDF(file){
+  pdfFname=file.name;
+  document.getElementById('pdfStatus').style.display='block';
+  document.getElementById('pdfStatusTitle').textContent='Reading PDF...';
+  document.getElementById('pdfStatusSub').textContent=file.name;
+  document.getElementById('pdfBar').style.width='30%';
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    document.getElementById('pdfBar').style.width='60%';
+    const b64=e.target.result.split(',')[1];
+    try{
+      document.getElementById('pdfStatusTitle').textContent='AI analyzing...';
+      document.getElementById('pdfBar').style.width='80%';
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          messages:[{role:'user',content:[
+            {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},
+            {type:'text',text:'This is a CA study material PDF. Please: 1) Identify the subject/topic 2) Count approximate pages 3) List the main topics covered. Reply in JSON format: {"subject":"...","pages":N,"topics":["topic1","topic2"...],"preview":"first 200 chars of content"}'}
+          ]}]
+        })
+      });
+      const data=await res.json();
+      let info={subject:'Study Material',pages:'?',topics:[],preview:''};
+      try{
+        const txt=data.content[0].text.replace(/```json|```/g,'').trim();
+        info=JSON.parse(txt);
+      }catch(e){}
+      pdfContent=b64;
+      document.getElementById('pdfBar').style.width='100%';
+      document.getElementById('pdfStatusIcon').textContent='✅';
+      document.getElementById('pdfStatusTitle').textContent='PDF Ready!';
+      document.getElementById('pdfStatusSub').textContent=info.subject;
+      setTimeout(()=>{
+        document.getElementById('pdfStatus').style.display='none';
+        document.getElementById('pdfResult').style.display='block';
+        document.getElementById('pdfName').textContent='📄 '+file.name;
+        document.getElementById('pdfPages').textContent=`Subject: ${info.subject} • ~${info.pages} pages`;
+      },800);
+    }catch(err){
+      document.getElementById('pdfStatusIcon').textContent='❌';
+      document.getElementById('pdfStatusTitle').textContent='Error — try again';
+      document.getElementById('pdfStatusSub').textContent='Please check connection';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+async function pdfAction(type){
+  if(!pdfContent){alert('Please upload a PDF first');return;}
+  document.getElementById('pdfOutput').style.display='block';
+  document.getElementById('pdfAskBox').style.display='none';
+  const labels={summary:'📋 Summary',keypoints:'🔑 Key Points',quiz:'🎯 Quiz Questions',flashcard:'🃏 Flashcard Ideas'};
+  const prompts={
+    summary:'Provide a comprehensive study summary of this document in bullet points. Include key concepts, definitions, and important rules. Focus on exam-relevant content. Use Bengali translations for key terms in brackets.',
+    keypoints:'Extract the most important key points from this document for CA exam preparation. Number each point. Include section numbers where relevant.',
+    quiz:'Generate 5 MCQ quiz questions based on this document content. Format: Q1. [question] (a) (b) (c) (d) Answer: [X] Explanation: [brief explanation]',
+    flashcard:'Create 8 flashcard pairs (Question → Answer) from the most important concepts in this document. Format: Q: [question]\nA: [answer]'
+  };
+  document.getElementById('pdfOutTitle').textContent=labels[type];
+  document.getElementById('pdfOutContent').textContent='⏳ Generating...';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        messages:[{role:'user',content:[
+          {type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfContent}},
+          {type:'text',text:prompts[type]}
+        ]}]
+      })
+    });
+    const data=await res.json();
+    document.getElementById('pdfOutContent').textContent=data.content[0].text;
+  }catch(e){document.getElementById('pdfOutContent').textContent='Error. Please try again.';}
+}
+function pdfAsk(){document.getElementById('pdfAskBox').style.display='block';document.getElementById('pdfOutput').style.display='none';}
+async function pdfAskSend(){
+  const q=document.getElementById('pdfQ').value.trim();if(!q||!pdfContent)return;
+  const ans=document.getElementById('pdfAns');ans.style.display='block';ans.textContent='⏳ Thinking...';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:800,
+        messages:[{role:'user',content:[
+          {type:'document',source:{type:'base64',media_type:'application/pdf',data:pdfContent}},
+          {type:'text',text:`Based on this document, answer this question for a CA student: ${q}\n\nGive a clear, exam-focused answer with relevant section numbers if applicable.`}
+        ]}]
+      })
+    });
+    const data=await res.json();ans.textContent=data.content[0].text;
+  }catch(e){ans.textContent='Error. Please try again.';}
+}
+
+// ===== AI CHAT =====
+async function sendC(){
+  const inp=document.getElementById('cIn');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addM(msg,'user');
+  const tp=addTyp();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`You are an expert CA tutor for ICAB Certificate Level students in Bangladesh.
+
+Key knowledge base:
+- Income Tax Act 2023 (replaced ITO 1984) — effective 22 June 2023
+- Tax slabs AY 2024-25: NIL up to 3.5L, 5% next 1L, 10% next 3L, 15% next 4L, 20% next 5L, 25% rest
+- Women/65+ senior citizens: 4L exemption. Disabled/3rd gender: 4.75L. Freedom fighters: 5L
+- Listed company tax: 22.5%. Non-listed: 27.5%. Bank/Insurance listed: 37.5%
+- Investment rebate: 15% of LOWEST of (actual investment, 25% of income, 1.5 Crore) — Section 78
+- Surcharge: no surcharge up to 4 Crore net wealth (Finance Ordinance 2025)
+- Revenue Policy Division + Revenue Management Division formed 2025 (NBR abolished)
+- Contract Act 1872: 7 elements OACFLNC. Minor's contract = void ab initio
+- Labour Act 2006: 48 hrs/week, gratuity 30 days/year (1-10 yrs), 45 days/year (10+ yrs)
+- Termination: 120 days notice (monthly permanent), 60 days (other permanent)
+- Cheque dishonour Section 138 NI Act: 30 days notice period
+- Companies Act 1994: Private Ltd max 50 members, Public Ltd min 7
+
+Rules:
+1. Always cite section/act numbers
+2. Use Bengali translations for key terms in brackets  
+3. Give exam-focused, clear answers
+4. Include mnemonics where helpful
+5. Be encouraging`,
+        messages:[{role:'user',content:msg}]
+      })
+    });
+    const data=await res.json();tp.remove();
+    addM(data.content?.[0]?.text||'Sorry, try again.','ai');
+  }catch(e){tp.remove();addM('Connection error. Try again.','ai');}
+}
+function addM(t,type){
+  const m=document.getElementById('cMsgs');
+  const d=document.createElement('div');d.className=`msg ${type}`;
+  d.innerHTML=`<div class="mav ${type==='ai'?'ai':'u'}">${type==='ai'?'AI':'S'}</div><div class="mbub">${t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;return d;
+}
+function addTyp(){
+  const m=document.getElementById('cMsgs');
+  const d=document.createElement('div');d.className='msg ai';
+  d.innerHTML=`<div class="mav ai">AI</div><div class="tdots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;return d;
+}
+function qQ(el){document.getElementById('cIn').value=el.textContent;sendC();}
+function cKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendC();}}
+
+// ===== INIT =====
+rQ();rFC();bldCal();bldChk();setNS('tax',document.getElementById('nb-tax'));ldNotes();
+</script>
+</body>
+</html>
